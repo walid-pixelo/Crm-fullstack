@@ -73,6 +73,7 @@ const API_BASE_URL =
   process.env.NEXT_PUBLIC_API_BASE_URL || "http://127.0.0.1:8000/api";
 
 type Contact = {
+  id?: number;
   contact_id: number;
   full_name: string | null;
   first_name: string | null;
@@ -269,8 +270,8 @@ export default function ContactsPage() {
               </tr>
             )}
 
-            {contacts.map((c) => (
-              <tr key={c.contact_id}>
+            {contacts.map((c, index) => (
+                <tr key={c.contact_id ?? c.id ?? index}>
                 <td style={tdStyle}>
                   <div style={{ fontWeight: 500 }}>
                     {c.full_name ||

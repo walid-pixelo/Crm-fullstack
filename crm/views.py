@@ -14,6 +14,10 @@ from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from django_filters.rest_framework import DjangoFilterBackend
+from datetime import datetime, time
+from django.db.models import Count
+
+from .models import Company, Contact
 
 from .models import Company, Contact, Deal, Activity, Sequence
 from .serializers import (
@@ -77,7 +81,6 @@ class ContactViewSet(viewsets.ModelViewSet):
     # ONLY fields that exist in your current contacts table
     filterset_fields = [
         "status",
-        "connection_degree",
         "duration",
         "company_name",
         "email_status",
@@ -240,7 +243,6 @@ class ContactBulkImportView(APIView):
                     company_name=company_name or None,
                     location=row.get("Location") or "",
                     duration=row.get("Duration") or "",
-                    connection_degree=row.get("Connection Degree") or "",
                     status=row.get("Status") or "",
                     official_email=row.get("Official Email") or "",
                     email=row.get("Official Email") or None,
@@ -268,10 +270,17 @@ def dashboard_summary(request):
     Total contacts, total companies, new contacts today.
     """
     today = timezone.localdate()
+    tz = timezone.get_current_timezone()
+
+    start_of_day = datetime.combine(today, time.min).replace(tzinfo=tz)
+    end_of_day = datetime.combine(today, time.max).replace(tzinfo=tz)
 
     total_contacts = Contact.objects.count()
     total_companies = Company.objects.count()
-    new_contacts_today = Contact.objects.filter(created_at__date=today).count()
+    new_contacts_today = Contact.objects.filter(
+        created_at__gte=start_of_day,
+        created_at__lte=end_of_day,
+    ).count()
 
     return Response(
         {
@@ -280,6 +289,7 @@ def dashboard_summary(request):
             "new_contacts_today": new_contacts_today,
         }
     )
+
 
 
 @api_view(["GET"])

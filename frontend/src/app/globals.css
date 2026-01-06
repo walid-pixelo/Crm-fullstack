@@ -1,26 +1,239 @@
-@import "tailwindcss";
-
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* Global reset and basic styles */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+html,
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  padding: 0;
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+}
+
+/* Basic link styling */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+/* General layout and page container */
+.page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.muted {
+  color: var(--subtext);
+}
+
+/* Buttons */
+.btn {
+  appearance: none;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  padding: 10px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btnPrimary {
+  border-color: var(--primary);
+  background: var(--primary);
+  color: white;
+}
+
+.btnPrimary:hover {
+  background: #d7256c; /* Darken primary on hover */
+}
+
+.btnGhost {
+  border-color: transparent;
+  background: transparent;
+  box-shadow: none;
+}
+
+/* Inputs and selects */
+.input,
+.select {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  outline: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.input:focus,
+.select:focus {
+  border-color: rgba(255, 46, 122, 0.45);
+  box-shadow: 0 0 0 4px rgba(255, 46, 122, 0.12);
+}
+
+/* Badge styles */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  border: 1px solid var(--border);
+  background: var(--muted);
+  color: var(--text);
+}
+
+.badgePink {
+  border-color: rgba(255, 46, 122, 0.35);
+  background: var(--primary-weak);
+  color: #b31245;
+}
+
+/* Top bar */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+}
+
+.topbarInner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+}
+
+.brandMark {
+  width: 34px;
+  height: 34px;
+  border-radius: 12px;
+  background: var(--primary);
+  box-shadow: var(--shadow-md);
+}
+
+.brandTitle {
+  font-size: 18px;
+}
+
+/* Navigation links */
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.navLink {
+  padding: 8px 10px;
+  border-radius: 10px;
+  color: var(--subtext);
+  font-weight: 700;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.navLink:hover {
+  background: var(--muted);
+  color: var(--text);
+}
+
+.navLinkActive {
+  background: var(--primary-weak);
+  color: #b31245;
+}
+
+/* Hero Section */
+.hero {
+  background: radial-gradient(
+      800px 300px at 50% 0%,
+      rgba(255, 46, 122, 0.12),
+      transparent 60%
+    ),
+    white;
+  border-bottom: 1px solid var(--border);
+  padding: 40px 20px;
+  text-align: center;
+  color: var(--text);
+}
+
+/* Utility Classes */
+.hide {
+  display: none !important;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.mt-4 {
+  margin-top: 1rem;
+}
+
+.mb-4 {
+  margin-bottom: 1rem;
+}
+
+.pt-4 {
+  padding-top: 1rem;
+}
+
+.pb-4 {
+  padding-bottom: 1rem;
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
 }

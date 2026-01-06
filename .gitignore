@@ -1,0 +1,10 @@
+.venv/
+*.zip
+*.tgz
+mongosh-2.2.5-darwin-x64
+mongosh-1.10.5-darwin-x64
+mongodb-macos-x86_64-6.0.3
+.idea
+*.pyc
+
+__pycache__/
